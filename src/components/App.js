@@ -6,6 +6,8 @@ import Question from './Question';
 function App() {
   const [questions, setQuestions] = useState([]);
   const [APIcalled, setAPIcalled] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState(0);
+  const [score, setScore] = useState(0);
 
   const getQuestions = () => {
     fetch('https://opentdb.com/api.php?amount=10&category=23&type=multiple')
@@ -15,7 +17,11 @@ function App() {
         setAPIcalled(true);
       })
       .catch(err => console.log(err));
-}
+  }
+
+  const moveToNextQuestion = () => {
+    setSelectedQuestion(selectedQuestion + 1);
+  }
 
   useEffect(() => {
     if (!APIcalled) {
@@ -23,10 +29,11 @@ function App() {
     }
   }, []);
 
-  if (APIcalled){
-    return questions.map((question) => (
-      <Question key={crypto.randomUUID()} questionData={question}  />
-    ))
+  useEffect(() => {
+  }, [selectedQuestion]);
+
+  if (APIcalled) {
+    return <Question key={crypto.randomUUID()} questionData={questions[selectedQuestion]} questionNumber={selectedQuestion + 1} onAnswer={moveToNextQuestion} totalScore={score} />
   } else {
     return <p>Loading...</p>
   }

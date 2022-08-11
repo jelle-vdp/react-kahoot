@@ -1,3 +1,24 @@
-p:not(:last-child){
-    margin-bottom:0.8rem;
+p {
+    margin-bottom: 1rem;
+}
+
+h2 {
+    margin-bottom:2rem;
+}
+
+.answers-wrapper {
+    display:flex; 
+    justify-content: space-evenly;
+    margin-bottom:2rem;
+
+    .answer {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        label {
+            margin-bottom:0.5rem;
+        }
+    }
 }
