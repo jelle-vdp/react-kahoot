@@ -23,6 +23,10 @@ function App() {
     setSelectedQuestion(selectedQuestion + 1);
   }
 
+  const addPoint = () => {
+    setScore(score + 1);
+  }
+
   useEffect(() => {
     if (!APIcalled) {
       getQuestions();
@@ -30,10 +34,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-  }, [selectedQuestion]);
+  }, [selectedQuestion, score]);
 
   if (APIcalled) {
-    return <Question key={crypto.randomUUID()} questionData={questions[selectedQuestion]} questionNumber={selectedQuestion + 1} onAnswer={moveToNextQuestion} totalScore={score} />
+    return <Question key={crypto.randomUUID()} questionData={questions[selectedQuestion]} questionNumber={selectedQuestion + 1} onAnswer={moveToNextQuestion} totalScore={score} onCorrectAnswer={addPoint} />
   } else {
     return <p>Loading...</p>
   }

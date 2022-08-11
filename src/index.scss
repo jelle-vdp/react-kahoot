@@ -54,6 +54,7 @@ main {
     background-color: $c-dark;
     color: $c-light;
     padding: 2rem;
+    position: relative;
 
     @media (min-width:900px){
         max-width: calc(1080px - 4rem);
