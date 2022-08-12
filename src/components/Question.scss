@@ -1,16 +1,29 @@
-.answer-overlay {
+.answer-overlay, .reset-overlay {
     display: none;
     position:absolute;
     top: 0;
     left:0;
     width:100%;
     height:100%;
-    background-color:rgba(0,0,0,0.7);
+    background-color:rgba(0,0,0,0.8);
     color:#fff;
+    align-items: center;
+    justify-content: center;
+    font-size:1.6rem;
+    padding: 1rem;
 
     &--show {
         display:flex;
     }
+}
+
+.reset-overlay {
+    flex-direction: column;
+
+    p {
+        margin-bottom:1rem;
+    }
+
 }
 
 p {

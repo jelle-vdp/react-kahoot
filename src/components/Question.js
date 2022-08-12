@@ -2,10 +2,12 @@ import './Question.scss';
 import parse from 'html-react-parser';
 import { useState, useEffect } from 'react';
 
-function Question({questionData, questionNumber, onAnswer, totalScore, onCorrectAnswer}) { 
+function Question({questionData, questionNumber, onAnswer, totalScore, onCorrectAnswer, onFinished}) { 
 
 const [answers, setAnswers] = useState([]);
-const [result, setResult] = useState("false");
+const [result, setResult] = useState("incorrect");
+const [showResultOverlay, setShowResultOverlay] = useState(false);
+const [showResetOverlay, setShowResetOverlay] = useState(false);
 
 const shuffle = (array) => {
     array.sort(() => Math.random() - 0.5);
@@ -14,23 +16,30 @@ const shuffle = (array) => {
 const checkAnswer = (e) => {
   e.preventDefault();
   const radioButtons = document.querySelectorAll('input[type="radio"]');
-  const answerOverlay = document.querySelector('.answer-overlay');
   radioButtons.forEach(radioButton => {
     if (radioButton.checked) {
       if (radioButton.value === questionData.correct_answer) {
-        console.log("correct");
-        setResult("true");
-        answerOverlay.classList.add('answer-overlay--show');
-        onCorrectAnswer();
+        setResult("correct");
+        setShowResultOverlay(true);
+        if (questionNumber !== 10) {
+          setTimeout(() => {
+            onCorrectAnswer();
+          }, 1000);
+        }
       } else {
-        console.log("incorrect");
-        answerOverlay.classList.add('answer-overlay--show');
-        setResult("false");
+        setResult("incorrect");
+        setShowResultOverlay(true);
       }
       setTimeout(() => {
-        onAnswer();
-        answerOverlay.classList.remove('answer-overlay--show');
-      }, 5000);
+        if (questionNumber !== 10) {
+          onAnswer();
+        }
+        setShowResultOverlay(false);
+
+        if (questionNumber === 10) {
+          setShowResetOverlay(true);
+        }
+      }, 1000);
     }
   })
 }
@@ -44,7 +53,11 @@ useEffect(() => {
 
 return (
     <>
-      <div className="answer-overlay">Your answer was {result}{!result? `The correct answer was ${questionData.correct_answer}` : ""}</div>
+      <div className={`answer-overlay${showResultOverlay? ' answer-overlay--show' : ''}`}><p>Your answer was {result}{result === "incorrect" ? `. The correct answer was ${questionData.correct_answer}.` : "."} Your current score is {result === "incorrect" ?  `${totalScore}` : `${totalScore + 1}`}.</p></div>
+      <div className={`reset-overlay${showResetOverlay? ' answer-overlay--show' : ''}`}>
+        <p>Game over! You scored {result === "incorrect" ?  `${totalScore}` : `${totalScore + 1}`}.</p>
+        <button onClick={onFinished}>Play again</button>
+      </div>
       <p>Question {questionNumber} of 10 / Current score: {totalScore}</p>
       <h2>{parse(questionData.question)}</h2>
       <form onSubmit={(e) => checkAnswer(e)}>
@@ -60,7 +73,7 @@ return (
           })) : (<p>Loading...</p>)
         }
         </fieldset>
-      <button type="submit">Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </>
   )

@@ -8,6 +8,7 @@ function App() {
   const [APIcalled, setAPIcalled] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(0);
   const [score, setScore] = useState(0);
+  const [resetGame, setResetGame] = useState(false);
 
   const getQuestions = () => {
     fetch('https://opentdb.com/api.php?amount=10&category=23&type=multiple')
@@ -27,17 +28,24 @@ function App() {
     setScore(score + 1);
   }
 
+  const doResetGame = () => {
+    setResetGame(true);
+    setScore(0);
+    setSelectedQuestion(0);
+    getQuestions();
+  }
+
   useEffect(() => {
     if (!APIcalled) {
       getQuestions();
     }
-  }, []);
+  }, [resetGame]);
 
   useEffect(() => {
   }, [selectedQuestion, score]);
 
   if (APIcalled) {
-    return <Question key={crypto.randomUUID()} questionData={questions[selectedQuestion]} questionNumber={selectedQuestion + 1} onAnswer={moveToNextQuestion} totalScore={score} onCorrectAnswer={addPoint} />
+    return <Question key={crypto.randomUUID()} questionData={questions[selectedQuestion]} questionNumber={selectedQuestion + 1} onAnswer={moveToNextQuestion} totalScore={score} onCorrectAnswer={addPoint} onFinished={doResetGame} />
   } else {
     return <p>Loading...</p>
   }
