@@ -18,7 +18,7 @@ fieldset {
   border:0;
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus, select:focus {
     outline: none;
 }
 
@@ -55,14 +55,13 @@ main {
     color: $c-light;
     padding: 2rem;
     position: relative;
+    margin:auto;
 
     @media (min-width:900px){
         max-width: calc(1080px - 4rem);
-        margin:auto 2rem;
     }
 
     @media (max-width:900px){
-        margin:20px;
         max-width: calc(100vw - 40px);
     }
 

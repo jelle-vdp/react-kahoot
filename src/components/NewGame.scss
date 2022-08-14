@@ -1,0 +1,19 @@
+h1 {
+    font-size:3rem;
+    margin-bottom:2rem;
+}
+
+label {
+    margin-bottom:0.5rem;
+}
+
+input, select {
+    width: 200px;
+    height:30px; 
+    margin-left:auto;
+    margin-right:auto;
+}
+
+select:not(:last-child), input {
+    margin-bottom:1rem;
+}
