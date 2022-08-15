@@ -32,11 +32,10 @@ const checkAnswer = (e) => {
           onAnswer();
         }
         setShowResultOverlay(false);
-
-        if (questionNumber === totalQuestions) {
-          setShowResetOverlay(true);
-        }
       }, 1000);
+      if (questionNumber === totalQuestions) {
+        setTimeout(()=>setShowResetOverlay(true), 1000);
+      }
     }
   })
 }
@@ -44,7 +43,7 @@ const checkAnswer = (e) => {
 if (answers) {
   return (
     <>
-      <div className={`answer-overlay${showResultOverlay? ' answer-overlay--show' : ''}`}><p>Your answer was {result}{result === "incorrect" ? `. The correct answer was ${questionData.correct_answer}.` : "."} Your current score is {result === "incorrect" ?  `${totalScore}` : `${totalScore + 1}`}.</p></div>
+      <div className={`answer-overlay${showResultOverlay? ' answer-overlay--show' : ''}`}><p>Your answer was {result}{result === "incorrect" ? `. The correct answer was ${parse(questionData.correct_answer)}.` : "."} Your current score is {result === "incorrect" ?  `${totalScore}` : `${totalScore + 1}`}.</p></div>
       <div className={`reset-overlay${showResetOverlay? ' answer-overlay--show' : ''}`}>
         <p>Game over! You scored {result === "incorrect" ?  `${totalScore}` : `${totalScore + 1}`}.</p>
         <button onClick={onFinished}>Play again</button>

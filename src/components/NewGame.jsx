@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import './NewGame.scss';
 
-function NewGame({onStartQuiz, faultyFetch}) {
+function NewGame({onStartQuiz, faultyFetch, resetGame}) {
 
   const [amountOfQuestions, setAmountOfQuestions] = useState(10);
   const [categoryOfQuestions, setCategoryOfQuestions] = useState("any");
@@ -13,7 +13,7 @@ function NewGame({onStartQuiz, faultyFetch}) {
   }
 
   const amountChange = (e) => {
-    setAmountOfQuestions(e.target.value);
+    setAmountOfQuestions(parseInt(e.target.value));
   }
 
   const categoryChange = (e) => {
@@ -60,7 +60,7 @@ function NewGame({onStartQuiz, faultyFetch}) {
       <>
         <h1>Start a new quiz</h1>
 
-        {faultyFetch ? <p>There aren't {amountOfQuestions} questions available in the catergory "{filterForProperCategory(quizCategories, categoryOfQuestions)}" with a {difficultyOfQuestions.toLowerCase()} difficulty level. Please try again.</p> : null}
+        {faultyFetch && !resetGame ? <p>There aren't {amountOfQuestions} questions available in the catergory "{filterForProperCategory(quizCategories, categoryOfQuestions)}" with a{difficultyOfQuestions === "easy" ? "n": ""} {difficultyOfQuestions.toLowerCase()} difficulty level. Please try again.</p> : null}
 
         <label htmlFor="questions__amount">Amount of questions?</label>
         <input onChange={amountChange} type="number" id="questions__amount" className="questions__amount" min="1" max="50" placeholder="10" />
@@ -70,16 +70,16 @@ function NewGame({onStartQuiz, faultyFetch}) {
           {quizCategories.map(category => (
             <option key={category.value} value={category.value}>{category.label}</option>
           ))}
-      </select>
-      <label htmlFor="questions__difficulty">Difficulty setting?</label>
-      <select onChange={difficultyChange} name="questions__difficulty" className="questions__difficulty">
-        <option value="any">Any Difficulty</option>
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-      <button className="questions__start" onClick={startQuiz}>Start the quiz</button>
-    </>
+        </select>
+        <label htmlFor="questions__difficulty">Difficulty setting?</label>
+        <select onChange={difficultyChange} name="questions__difficulty" className="questions__difficulty">
+          <option value="any">Any Difficulty</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+        <button className="questions__start" onClick={startQuiz}>Start the quiz</button>
+      </>
   );
 }
 
