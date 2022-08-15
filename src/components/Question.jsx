@@ -21,7 +21,7 @@ const checkAnswer = (e) => {
         if (questionNumber !== totalQuestions) {
           setTimeout(() => {
             onCorrectAnswer();
-          }, 1000);
+          }, 2000);
         }
       } else {
         setResult("incorrect");
@@ -32,9 +32,9 @@ const checkAnswer = (e) => {
           onAnswer();
         }
         setShowResultOverlay(false);
-      }, 1000);
+      }, 2000);
       if (questionNumber === totalQuestions) {
-        setTimeout(()=>setShowResetOverlay(true), 1000);
+        setTimeout(()=>setShowResetOverlay(true), 2000);
       }
     }
   })
@@ -43,9 +43,10 @@ const checkAnswer = (e) => {
 if (answers) {
   return (
     <>
-      <div className={`answer-overlay${showResultOverlay? ' answer-overlay--show' : ''}`}><p>Your answer was {result}{result === "incorrect" ? `. The correct answer was ${parse(questionData.correct_answer)}.` : "."} Your current score is {result === "incorrect" ?  `${totalScore}` : `${totalScore + 1}`}.</p></div>
+      {console.log(questionData.correct_answer)}
+      <div className={`answer-overlay${showResultOverlay? ' answer-overlay--show' : ''}`}><p>Your answer was {result}{result === "incorrect" ? `. The correct answer was ${parse(questionData.correct_answer)}.` : "."} Your current score is {result === "incorrect" ?  `${totalScore}` : `${totalScore + 1}`} point{totalScore + 1 > 1 || result === "incorrect" && totalScore === 0 ? "s" : ""}.</p></div>
       <div className={`reset-overlay${showResetOverlay? ' answer-overlay--show' : ''}`}>
-        <p>Game over! You scored {result === "incorrect" ?  `${totalScore}` : `${totalScore + 1}`}.</p>
+        <p>Game over! You scored {result === "incorrect" ?  `${totalScore}` : `${totalScore + 1}`} point{totalScore + 1 > 1 || result === "incorrect" && totalScore === 0 ? "s" : ""}.</p>
         <button onClick={onFinished}>Play again</button>
       </div>
       <p>Question {questionNumber} of {totalQuestions} / Current score: {totalScore}</p>
