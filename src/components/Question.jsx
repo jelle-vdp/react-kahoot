@@ -43,7 +43,6 @@ const checkAnswer = (e) => {
 if (answers) {
   return (
     <>
-      {console.log(questionData.correct_answer)}
       <div className={`answer-overlay${showResultOverlay? ' answer-overlay--show' : ''}`}><p>Your answer was {result}{result === "incorrect" ? `. The correct answer was ${parse(questionData.correct_answer)}.` : "."} Your current score is {result === "incorrect" ?  `${totalScore}` : `${totalScore + 1}`} point{totalScore + 1 > 1 || result === "incorrect" && totalScore === 0 ? "s" : ""}.</p></div>
       <div className={`reset-overlay${showResetOverlay? ' answer-overlay--show' : ''}`}>
         <p>Game over! You scored {result === "incorrect" ?  `${totalScore}` : `${totalScore + 1}`} point{totalScore + 1 > 1 || result === "incorrect" && totalScore === 0 ? "s" : ""}.</p>
