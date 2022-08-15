@@ -50,7 +50,7 @@ function App() {
 
   const startNewGame = (amountOfQuestions, categoryOfQuestions, difficultyOfQuestions) => {
     setResetGame(false);
-    
+
     if (!amountOfQuestions) {
       amountOfQuestions = 10;
     }
@@ -62,7 +62,6 @@ function App() {
     }
     setTotalAmountOfQuestions(amountOfQuestions);
     getQuestions(amountOfQuestions, categoryOfQuestions, difficultyOfQuestions);
-    console.log("triggerrrrrrr");
   }
 
   const doResetGame = () => {

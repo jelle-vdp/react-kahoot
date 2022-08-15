@@ -60,7 +60,7 @@ function NewGame({onStartQuiz, faultyFetch, resetGame}) {
       <>
         <h1>Start a new quiz</h1>
 
-        {faultyFetch && !resetGame ? <p>There aren't {amountOfQuestions} questions available in the catergory "{filterForProperCategory(quizCategories, categoryOfQuestions)}" with a{difficultyOfQuestions === "easy" ? "n": ""} {difficultyOfQuestions.toLowerCase()} difficulty level. Please try again.</p> : null}
+        {faultyFetch && !resetGame ? <p className='error'>There aren't {amountOfQuestions} questions available in the catergory "{filterForProperCategory(quizCategories, categoryOfQuestions)}" with a{difficultyOfQuestions === "easy" ? "n": ""} {difficultyOfQuestions.toLowerCase()} difficulty level. Please try again.</p> : null}
 
         <label htmlFor="questions__amount">Amount of questions?</label>
         <input onChange={amountChange} type="number" id="questions__amount" className="questions__amount" min="1" max="50" placeholder="10" />
